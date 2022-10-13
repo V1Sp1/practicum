@@ -1,9 +1,9 @@
-#ifdef queue6p42
-#define queue6p42
+#ifndef QUEUE6P42
+#define QUEUE6P42
 #include <stdlib.h>
 
-typedef strucr inode {
-    void * data;
+typedef struct inode {
+    void *data;
     struct inode *next;
 } inode;
 

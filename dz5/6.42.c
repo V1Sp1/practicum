@@ -36,6 +36,7 @@ int sizequ(queue q)
 void clearqu(queue *q)
 {
     queue del = *q;
+    *q = (*q) -> next;
     for(; *q != NULL; *q = (*q) -> next){
         free(del);
         del = (*q) -> next;
