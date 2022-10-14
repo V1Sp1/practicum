@@ -2,11 +2,12 @@
 
 void putqu(queue *q, void *value)
 {
-    queue new;
-    new -> data = data;
+    queue new = (queue)malloc(sizeof(inode));
+    new -> data = value;
     new -> next = NULL;
     if (*q == NULL){
         *q = new;
+        return;
     }
     for (; (*q) -> next != NULL; q = &((*q) -> next));
     (*q) -> next = new;
@@ -35,10 +36,9 @@ int sizequ(queue q)
 
 void clearqu(queue *q)
 {
-    queue del = *q;
-    *q = (*q) -> next;
-    for(; *q != NULL; *q = (*q) -> next){
+    queue del;
+    for(del = *q; del != NULL; del = *q){
+        *q = del -> next;
         free(del);
-        del = (*q) -> next;
     }
 }

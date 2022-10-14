@@ -1,5 +1,6 @@
 #include "tree45e.h"
 
+void printqu(queue q);
 int count_level_tree(tree tr, int number)
 {
     if ((number < 0) || (tr == NULL)){
@@ -8,23 +9,27 @@ int count_level_tree(tree tr, int number)
     int n, last = 1, next = 0;
     queue q = NULL;
     putqu(&q, tr);
-    for(n = 0; n < number; ++n){
+    for(n = 0; (q != NULL) && (n < number); ++n){
         tree buff;
+
         for(; last > 0; --last){
-            buff = (tree)getqu(q);
+            buff = (tree)getqu(&q);
             if (buff -> left != NULL){
                 ++next;
-                putqu(q, buff -> left);
+                putqu(&q, buff -> left);
             }
             if (buff -> right != NULL){
                 ++next;
-                putqu(q, buff -> right);
+                putqu(&q, buff -> right);
             }
+        }
+        if (next == 0){
+            break;
         }
         last = next;
         next = 0;
     }
-    clearqu(&q);
+       clearqu(&q);
     return last;
 }
 
@@ -44,24 +49,28 @@ void printtr(tree tr)
     for(;;){
         tree buff;
         for(; last > 0; --last){
-            buff = (tree)getqu(q);
+            buff = (tree)getqu(&q);
             if (buff -> left != NULL){
                 ++next;
                 printf("%d ", buff -> data);
-                putqu(q, buff -> left);
+                putqu(&q, buff -> left);
             }
             if (buff -> right != NULL){
                 ++next;
-                putqu(q, buff -> right);
+                printf("%d ", buff -> data);
+                putqu(&q, buff -> right);
             }
         }
         if (next == 0){
+            printf("%d ", buff -> data);
             break;
         }
         printf("\n");
         last = next;
         next = 0; 
     }
+    printf("\n");
+    clearqu(&q);
 }
 
 void addtr(tree *tr, int value)
@@ -99,7 +108,9 @@ int main(void)
     addtr(&tr, 4);
     addtr(&tr, 5);
     printtr(tr);
-    printf("--------------\n");
+    printf("----------\n");
+    int n = count_level_tree(tr, 4);
+    printf("%d\n", n);
     cleartr(&tr);
     return 0;
 }
