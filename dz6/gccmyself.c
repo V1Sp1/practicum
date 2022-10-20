@@ -8,10 +8,12 @@
 int main(int argc, char *argv[])
 {
     pid_t pid;
-    char *name = (char*)malloc(sizeof(char) * (strlen(argv[0]) + 2));
+    int namelen = strlen(argv[0]);
+    char *name = (char*)malloc(sizeof(char) * (namelen + 3));
     strcpy(name, argv[0]);
-    name[strlen(argv[0])] = '.';
-    name[strlen(argv[0])+1] = 'c';
+    name[namelen] = '.';
+    name[namelen+1] = 'c';
+    name[namelen+2] = '\0';
     pid = fork();
     if (pid == -1){
         perror("fork:");
@@ -23,7 +25,6 @@ int main(int argc, char *argv[])
         exit(1);
     }
     wait(NULL);
-    printf("%s\n", name);
     free(name);
     return 0;
 }
