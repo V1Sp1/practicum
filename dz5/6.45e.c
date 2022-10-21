@@ -1,5 +1,5 @@
 #include "tree45e.h"
-
+#include <time.h>
 void printqu(queue q);
 int count_level_tree(tree tr, int number)
 {
@@ -50,14 +50,13 @@ void printtr(tree tr)
         tree buff;
         for(; last > 0; --last){
             buff = (tree)getqu(&q);
+            printf("%d ", buff -> data);
             if (buff -> left != NULL){
                 ++next;
-                printf("%d ", buff -> data);
                 putqu(&q, buff -> left);
             }
             if (buff -> right != NULL){
                 ++next;
-                printf("%d ", buff -> data);
                 putqu(&q, buff -> right);
             }
         }
@@ -102,14 +101,16 @@ void cleartr(tree *tr)
 int main(void)
 {
     tree tr = NULL;
-    addtr(&tr, 1);
-    addtr(&tr, 2);
-    addtr(&tr, 3);
-    addtr(&tr, 4);
-    addtr(&tr, 5);
+    int n;
+    scanf("%d", &n);
+    printf("\n");
+    srand(time(NULL));
+    for (; n > 0; --n){
+        addtr(&tr, 1+(int)(100.0*rand()/(RAND_MAX+1.0)));
+    }
     printtr(tr);
     printf("----------\n");
-    int n = count_level_tree(tr, 4);
+    n = count_level_tree(tr, 2);
     printf("%d\n", n);
     cleartr(&tr);
     return 0;
